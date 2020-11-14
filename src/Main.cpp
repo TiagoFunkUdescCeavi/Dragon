@@ -3,18 +3,19 @@
 #include <vector>
 #include <stdexcept>
 
-#include "lex.h"
+#include "Parser.h"
 
 using namespace std;
 
 void run( string fileName ){
-	Lex l( fileName );
-		
-	string s;
-	do{
-		s = l.nextToken();
-		cout << ">>>" << s << "<<<" << endl;
-	}while( l.hasNextToken() );
+//	Lex l( fileName );
+//
+//	do{
+//		cout << ">>>" << l.nextToken() << "<<<" << endl;
+//	}while( l.hasNextToken() );
+
+	Parser p( fileName );
+	p.execute();
 }
 
 string getFileName( int argc, char* argv[] ){

@@ -6,22 +6,28 @@
 using namespace std;
 
 class Symbol{
-private:
-	string type;
-	string token;
 
 public:
-	Symbol( string type, string token ){
-		this->type = type;
-		this->token = token;
-	}
-	
-	string getToken(){
-		return this->token;
-	}
+	enum TOKEN_TYPE{
+		ID,
+		NUMBER,
+		KEYWORD,
+		OPERATOR,
+		CHARACTERS,
+		SEPARATOR,
+		INDEFINED
+	};
 
-	string getType(){
-		return this->type;
-	}
+	Symbol( TOKEN_TYPE type, string token );
+	
+	string getToken();
+	TOKEN_TYPE getType();
+
+	friend ostream &operator<<( ostream &output, const Symbol &symbol );
+
+private:
+	TOKEN_TYPE type;
+	string token;
+
 };
 #endif

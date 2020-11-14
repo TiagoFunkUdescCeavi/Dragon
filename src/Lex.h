@@ -5,74 +5,34 @@
 #include <vector>
 #include <fstream>
 #include <stdexcept>
+#include <regex>
 
 #include <iostream>
 
-#include "utils.h"
+#include "Utils.h"
 #include "SymbolTable.h"
 #include "Buffer.h"
+#include "Symbol.h"
 
 using namespace std;
 
 class Lex{
 public:
-	Lex( string fileName ){
-		buffer = new Buffer( fileName );
-	}
+	Lex( string fileName );
+	virtual ~Lex();
 	
-	virtual ~Lex(){
-		delete buffer;
-	}
+	Symbol nextToken();
+	bool hasNextToken();
 	
-	void mostrarMerda( char ch ){
-		cout << "char:";
-		if(ch=='\0'){
-			cout << "\\0";
-		} else{
-			cout << ch;
-		} 
-		cout << endl;
-	}
-	
-	string nextToken(){
-		bool stop = false;
-		char ch;
-		aux = "";
-		
-		while( !stop ){
-			ch = buffer->next();
-//			mostrarMerda( ch );
-			if( ch == '\0' ){
-				stop = true;
-				hasNext = false;
-			} else if( isBlank( ch ) ){
-				if( aux.size() != 0 ){
-					stop = true;
-				}
-				
-			}else if( isSpecialChar( ch ) ){
-				if( aux.size() != 0 ){
-					buffer->retract( 1 );
-				}else{
-					aux = ch;
-				}
-				stop = true;
-			}else{
-				aux += ch;
-			}
-		}
-		return aux;
-	}
-	
-	bool hasNextToken(){
-		return hasNext;
-	}
-	
+	int getCurrentLine();
+
 private:
 	bool hasNext = true;
+	int currentLine = 1;
 	string aux;
 	Buffer * buffer = 0;
 	
+	Symbol symbolize( string token );
 };
 
 #endif
