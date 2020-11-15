@@ -15,12 +15,14 @@ Symbol Lex::nextToken(){
 
 	while( !stop ){
 		ch = buffer->next();
+		currentColumn++;
 		if( isBlank( ch ) ){
 			if( aux.size() != 0 ){
 				stop = true;
 			}
 			if( ch == '\n' ){
 				currentLine++;
+				currentColumn = 0;
 			}
 
 		}else if( isSpecialChar( ch ) ){
@@ -51,6 +53,10 @@ int Lex::getCurrentLine(){
 	return currentLine;
 }
 
+int Lex::getCurrentColumn(){
+	return currentColumn;
+}
+
 Symbol Lex::symbolize( string token ){
 	 if( regex_match( token, regex("if|else|while|function|break") ) ){
 		return Symbol( Symbol::TOKEN_TYPE::KEYWORD, aux );
@@ -61,8 +67,11 @@ Symbol Lex::symbolize( string token ){
 	}else if( regex_match( token, regex("[0-9]+") ) ){
 		return Symbol( Symbol::TOKEN_TYPE::NUMBER, aux );
 
-	}else if( regex_match( token, regex("[+]|[-]|[*]|[/]|[=]|[!]") ) ){
+	}else if( regex_match( token, regex("[=]") ) ){
 		return Symbol( Symbol::TOKEN_TYPE::OPERATOR, aux );
+
+	}else if( regex_match( token, regex("[+]|[-]|[*]|[/]|[=]") ) ){
+		return Symbol( Symbol::TOKEN_TYPE::MATH_OPERATOR, aux );
 
 	}else if( regex_match( token, regex("\"([a-zA-Z0-9])+\"") ) ){
 		return Symbol( Symbol::TOKEN_TYPE::CHARACTERS, aux );

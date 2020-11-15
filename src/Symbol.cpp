@@ -21,6 +21,8 @@ ostream &operator<<( ostream &output, const Symbol &symbol ){
 		s = "NUMBER";
 	}else if( symbol.type == Symbol::TOKEN_TYPE::OPERATOR ){
 		s = "OPERATOR";
+	}else if( symbol.type == Symbol::TOKEN_TYPE::MATH_OPERATOR ){
+		s = "MATH_OPERATOR";
 	}else if( symbol.type == Symbol::TOKEN_TYPE::KEYWORD ){
 		s = "KEYWORD";
 	}else if( symbol.type == Symbol::TOKEN_TYPE::SEPARATOR ){

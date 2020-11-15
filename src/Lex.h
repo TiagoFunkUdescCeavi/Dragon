@@ -25,10 +25,12 @@ public:
 	bool hasNextToken();
 	
 	int getCurrentLine();
+	int getCurrentColumn();
 
 private:
 	bool hasNext = true;
 	int currentLine = 1;
+	int currentColumn = 0;
 	string aux;
 	Buffer * buffer = 0;
 	

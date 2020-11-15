@@ -20,7 +20,14 @@ private:
 	Lex * lex = 0;
 	SymbolTable * symbolTable = 0;
 
+	Symbol getNextSymbol();
 	void checkSymbolInvalid( Symbol s );
+
+	void comand();
+	void expression();
+
+	string location( Symbol s );
+
 
 };
 
